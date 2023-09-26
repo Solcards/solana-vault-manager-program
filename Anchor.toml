@@ -1,15 +1,13 @@
 [features]
 seeds = false
 skip-lint = false
-[programs.localnet]
-solana_vault_manager = "Ggcpkb5z4ZKseSnfJ3YbCZ9UnLeiiUmEcu6K89xdqaU9"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "Localnet"
-wallet = "/Users/jorgehernandez/.config/solana/id.json"
+cluster = "localnet"
+wallet = "./id.json"
 
 [scripts]
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
