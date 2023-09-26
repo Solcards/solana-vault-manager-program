@@ -77,7 +77,7 @@ describe("solana-vault-manager", () => {
     );
   });
 
-  it("#withdrawl", async () => {
+  it("#withdraw", async () => {
 
     const INIT_AMOUNT = 1000;
     const token = await CreateToken({

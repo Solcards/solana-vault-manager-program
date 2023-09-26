@@ -23,7 +23,8 @@ pub mod solana_vault_manager {
             authority: ctx.accounts.vault.to_account_info(),
         };
 
-        let ctx_transfer =CpiContext::new(ctx.accounts.token_program.to_account_info(), cpi_accounts);
+        let ctx_transfer =
+            CpiContext::new(ctx.accounts.token_program.to_account_info(), cpi_accounts);
         token::transfer(
             ctx_transfer.with_signer(&[&&[
                 ctx.accounts.vault.seed.as_slice(),
@@ -31,17 +32,17 @@ pub mod solana_vault_manager {
             ][..]]),
             amount,
         )?;
-  
+
         Ok(())
     }
 }
 
 #[account]
 pub struct Vault {
-    pub owner: Pubkey,
-    pub mint: Pubkey,
-    pub seed: Vec<u8>,
-    pub bump: u8,
+    pub owner: Pubkey, // 32
+    pub mint: Pubkey, // 32
+    pub seed: Vec<u8>, // 4 for length + content ?? use seed.len()
+    pub bump: u8, // 1
 }
 
 #[derive(Accounts)]
@@ -49,10 +50,10 @@ pub struct Vault {
 pub struct CreateVaultContext<'info> {
     pub mint: Account<'info, Mint>,
     #[account(
-        init, 
-        payer = owner, 
-        space = 8 + 32 + 32 + 1 + 4 + seed_vault.len(), 
-        seeds = [seed_vault.as_slice()], 
+        init,
+        payer = owner,
+        space = 8 + 32 + 32 + 1 + 4 + seed_vault.len(),
+        seeds = [seed_vault.as_slice()],
         bump
     )]
     pub vault: Account<'info, Vault>,
@@ -70,7 +71,6 @@ pub struct CreateVaultContext<'info> {
     pub system_program: Program<'info, System>,
     pub token_program: Program<'info, Token>,
 }
-
 
 #[derive(Accounts)]
 pub struct TransferContext<'info> {
